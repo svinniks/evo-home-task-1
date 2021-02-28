@@ -1,0 +1,112 @@
+<html>
+	<head>
+		<style>
+			.map-row {
+				display: flex;
+			}
+			
+			.map-cell {
+				width: 1em;
+				height: 1em;
+				margin: 1px;
+			}
+			
+			.map-cell:hover {
+				cursor: pointer;
+			}
+			
+			#result {
+				margin-top: 24px;
+			}
+			
+			button {
+				margin-top: 24px;
+			}
+		</style>
+		
+		<script>
+		
+const socket = new WebSocket('wss://hometask.eg1236.com/game-pipes/');
+
+function parseMap(map) {
+	return map
+		.split('\n')
+		.slice(1, -1)
+		.map(line => [...line]);
+}
+
+function pipeClick(x, y) {
+	socket.send('rotate ' + x + ' ' + y); 
+}
+
+function renderMap(map) {
+	let container = document.getElementById('map-container');
+	container.innerHTML = '';
+	
+	
+	
+	/*map.forEach((row, y) => {
+		let rowElement = document.createElement('div');
+		rowElement.classList.add('map-row');
+		
+		row.forEach((cell, x) => {
+			let cellElement = document.createElement('div');
+			cellElement.innerHTML = cell;
+			cellElement.classList.add('map-cell');
+			
+			cellElement.addEventListener('click', pipeClick.bind(this, x, y));
+			
+			rowElement.append(cellElement);
+		});
+		
+		container.append(rowElement);
+	});
+	*/
+	
+	
+}
+		
+socket.addEventListener('open', event => {
+	console.log('Connection ready!');
+});
+
+socket.addEventListener('message', function (event) {
+	console.log(event.data);
+	
+	if (event.data.startsWith('map:')) 
+		renderMap(parseMap(event.data));
+	else if (event.data.startsWith('rotate:'))
+		socket.send('map');
+	else if (event.data.startsWith('verify:'))
+		document.getElementById('result').innerHTML = event.data;
+});
+
+function verify() {
+	socket.send('verify');
+}
+
+function execute(event) {
+	socket.send(event.target.value);
+	event.target.value = '';
+}
+
+function sendCommand() {
+	socket.send(document.getElementById('command').value);
+}
+		
+		</script>
+	</head>
+	<body>
+		<input onchange="execute(event)">
+		
+		<div id="map-container" class="map-container">
+		</div>
+		
+		<textarea id="command"></textarea>
+		
+		<button onclick="sendCommand()">Send!</button>
+		<button onclick="verify()">Verify!</button>
+		
+		<div id="result"></div>
+	</body>
+</html>
