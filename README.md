@@ -1,7 +1,7 @@
 The solution works for up to the 5-th level.
 On the 6-th one RAM consumption goes into space :(
 
-To run save the map into the __resources/map.txt__ file
+To run save the map into the __/map.txt__ file in the current directory
 (cr/lf line ends, without the "map:" first line), the execute Application.main.
 The program will output some log info and then save the list of rotations
 into the __rotations.txt__ file in the current directory.
