@@ -43,9 +43,7 @@ function renderMap(map) {
 	let container = document.getElementById('map-container');
 	container.innerHTML = '';
 	
-	
-	
-	/*map.forEach((row, y) => {
+	map.forEach((row, y) => {
 		let rowElement = document.createElement('div');
 		rowElement.classList.add('map-row');
 		
@@ -61,9 +59,6 @@ function renderMap(map) {
 		
 		container.append(rowElement);
 	});
-	*/
-	
-	
 }
 		
 socket.addEventListener('open', event => {
