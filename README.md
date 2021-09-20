@@ -26,4 +26,8 @@ Below is a rough illustration of a region splitted in halves, with some identifi
 Note that the trees 1 and 3 are fully connected along the separation edge (the gray one):
 
 ![](docs/halves-minimized-trees.png)
+
+__Update__: almost forgot - only the tree pairs are picked if they have __just and only one__ connection on
+the separation edge, otherwise it either introduces a cycle of an incomplete branch (which does end with a terminal
+pipe fragment)
   
